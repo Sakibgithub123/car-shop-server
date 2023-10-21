@@ -37,6 +37,24 @@ async function run() {
         const result = await carCollection.insertOne(product);
         res.send(result);
     })
+    app.put('/addproducts/:id', async(req,res)=>{
+        const id=req.params.id;
+        const filter={_id: new ObjectId(id)}
+        const options={upsert:true}
+        const updateCar=req.body
+        const car={
+            $set:{
+                name:updateCar.name,
+                brand_name:updateCar.brand_name,
+                price:updateCar.price,
+                short_description:updateCar.short_description,
+                rating:updateCar.rating,
+                image:updateCar.image
+            }
+        }
+        const result= await carCollection.updateOne(filter,car,options)
+        res.send(result);
+    })
 
     app.get('/addproducts', async(req,res)=>{
         const cursor=carCollection.find();
