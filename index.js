@@ -65,6 +65,28 @@ async function run() {
             res.send(result)
     
         }) 
+        app.get('/addproducts/:id', async(req,res)=>{
+            const id=req.params.id;
+            const query={_id: new ObjectId(id)}
+            console.log(query)
+            const result= await carCollection.findOne(query)
+            res.send(result);
+        })
+        app.get('/addproducts/:brand_name', async(req,res)=>{
+            const brand_name=req.params.brand_name;
+            const query={brand_name: new ObjectId(brand_name)}
+            console.log(query)
+            const cursor= carCollection.find(query)
+            const result= await cursor.toArray();
+            res.send(result);
+        })
+        app.delete('/addproducts/:id', async(req,res)=>{
+            const id=req.params.id;
+            const query={_id: new ObjectId(id)}
+            console.log(query)
+            const result= await carCollection.deleteOne(query)
+            res.send(result);
+        })
         const result= await carCollection.updateOne(filter,car,options)
         res.send(result);
     })
