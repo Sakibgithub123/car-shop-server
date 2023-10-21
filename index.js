@@ -52,6 +52,19 @@ async function run() {
                 image:updateCar.image
             }
         }
+        app.get('/addproducts', async(req,res)=>{
+            const cursor=carCollection.find();
+            const result= await cursor.toArray();
+            res.send(result)
+    
+        }) 
+        app.get('/addcarts', async(req,res)=>{
+            const cursor=cartCollection.find();
+            const result= await cursor.toArray();
+            console.log(result)
+            res.send(result)
+    
+        }) 
         const result= await carCollection.updateOne(filter,car,options)
         res.send(result);
     })
